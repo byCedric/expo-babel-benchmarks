@@ -1,0 +1,50 @@
+diff --git a/build/babel-transformer.js b/build/babel-transformer.js
+index 39e6120116b5287f8deae195df22f8b26377e98b..18d60b0b5e6018ae5c258525a4d23acbe401dd20 100644
+--- a/build/babel-transformer.js
++++ b/build/babel-transformer.js
+@@ -3,7 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
+     return (mod && mod.__esModule) ? mod : { "default": mod };
+ };
+ Object.defineProperty(exports, "__esModule", { value: true });
++const babelTiming = require('babel-timing');
+ const node_assert_1 = __importDefault(require("node:assert"));
++const node_fs = require('node:fs');
++const node_path = require('node:path');
+ const loadBabelConfig_1 = require("./loadBabelConfig");
+ const transformSync_1 = require("./transformSync");
+ const debug = require('debug')('expo:metro-config:babel-transformer');
+@@ -83,6 +86,7 @@ const transform = ({ filename, src, options,
+ plugins, }) => {
+     const OLD_BABEL_ENV = process.env.BABEL_ENV;
+     process.env.BABEL_ENV = options.dev ? 'development' : process.env.BABEL_ENV || 'production';
++
+     try {
+         const babelConfig = {
+             // ES modules require sourceType='module' but OSS may not always want that
+@@ -112,6 +116,12 @@ plugins, }) => {
+             // about the requirements of an Expo project, making it easier to migrate to other transpilers in the future.
+             caller: getBabelCaller({ filename, options }),
+         };
++
++        // Create a new babel-timing benchmark timer
++        const babelTimer = new babelTiming.Timer(filename);
++        // Configure babel-timing to measure the full transformation
++        babelConfig.wrapPluginVisitorMethod = babelTimer.wrapPluginVisitorMethod;
++
+         const result = (0, transformSync_1.transformSync)(src, babelConfig, options);
+         // The result from `transformFromAstSync` can be null (if the file is ignored)
+         if (!result) {
+@@ -121,6 +131,13 @@ plugins, }) => {
+             return { ast: null };
+         }
+         (0, node_assert_1.default)(result.ast);
++
++        // Output the babel-timing transformation to a single jsonl line
++        const babelTimingResults = babelTimer.getResults();
++        const targetFile = node_path.join(process.cwd(), '.babel-timing', 'data.jsonl');
++        node_fs.mkdirSync(node_path.dirname(targetFile), { recursive: true });
++        node_fs.appendFileSync(targetFile, JSON.stringify(babelTimingResults) + '\n');
++
+         return { ast: result.ast, metadata: result.metadata };
+     }
+     finally {
