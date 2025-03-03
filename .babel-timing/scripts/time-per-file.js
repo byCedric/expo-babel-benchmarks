@@ -1,7 +1,12 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const process = require('node:process');
+const assert = require('node:assert');
 
-const data = fs.readFileSync(path.join(__dirname, '..', 'data.jsonl'), 'utf8');
+const platform = process.argv[2];
+assert(platform, 'No platform specified, run the script with `per-file [android|ios|web|server]` to select the platform benchmark results');
+
+const data = fs.readFileSync(path.join(__dirname, '..', `data-${platform}.jsonl`), 'utf8');
 const entries = data.split('\n').filter(Boolean).map((content) => JSON.parse(content));
 
 const sorted = entries.sort((a, b) => a.time - b.time);

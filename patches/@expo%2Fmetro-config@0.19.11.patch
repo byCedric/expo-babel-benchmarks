@@ -1,5 +1,8 @@
+diff --git a/node_modules/@expo/metro-config/.bun-tag-d0751665bdab0596 b/.bun-tag-d0751665bdab0596
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
 diff --git a/build/babel-transformer.js b/build/babel-transformer.js
-index 39e6120116b5287f8deae195df22f8b26377e98b..18d60b0b5e6018ae5c258525a4d23acbe401dd20 100644
+index 39e6120116b5287f8deae195df22f8b26377e98b..aa5b4b9d6c3ad9d6e9d2f2acb798792e0ca8a596 100644
 --- a/build/babel-transformer.js
 +++ b/build/babel-transformer.js
 @@ -3,7 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
@@ -34,14 +37,15 @@ index 39e6120116b5287f8deae195df22f8b26377e98b..18d60b0b5e6018ae5c258525a4d23acb
          const result = (0, transformSync_1.transformSync)(src, babelConfig, options);
          // The result from `transformFromAstSync` can be null (if the file is ignored)
          if (!result) {
-@@ -121,6 +131,13 @@ plugins, }) => {
+@@ -121,6 +131,14 @@ plugins, }) => {
              return { ast: null };
          }
          (0, node_assert_1.default)(result.ast);
 +
 +        // Output the babel-timing transformation to a single jsonl line
 +        const babelTimingResults = babelTimer.getResults();
-+        const targetFile = node_path.join(process.cwd(), '.babel-timing', 'data.jsonl');
++        const targetPlatform = options.platform === 'web' && options.customTransformOptions.environment === 'node' ? 'server' : options.platform;
++        const targetFile = node_path.join(process.cwd(), '.babel-timing', `data-${targetPlatform}.jsonl`);
 +        node_fs.mkdirSync(node_path.dirname(targetFile), { recursive: true });
 +        node_fs.appendFileSync(targetFile, JSON.stringify(babelTimingResults) + '\n');
 +
