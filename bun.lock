@@ -42,6 +42,12 @@
       },
     },
   },
+  "patchedDependencies": {
+    "metro-source-map@0.81.2": "patches/metro-source-map@0.81.2.patch",
+    "@expo/metro-config@0.19.11": "patches/@expo%2Fmetro-config@0.19.11.patch",
+    "@react-native/babel-plugin-codegen@0.76.7": "patches/@react-native%2Fbabel-plugin-codegen@0.76.7.patch",
+    "babel-preset-expo@12.0.9": "patches/babel-preset-expo@12.0.9.patch",
+  },
   "packages": {
     "@0no-co/graphql.web": ["@0no-co/graphql.web@1.1.1", "", { "peerDependencies": { "graphql": "^14.0.0 || ^15.0.0 || ^16.0.0" }, "optionalPeers": ["graphql"] }, "sha512-F2i3xdycesw78QCOBHmpTn7eaD2iNXGwB2gkfwxcOfBbeauYpr8RBSyJOkDrFtKtVRMclg8Sg3n1ip0ACyUuag=="],
 
