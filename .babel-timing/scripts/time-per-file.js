@@ -17,4 +17,4 @@ for (const entry of sorted) {
   console.log(entry.name, entry.time);
 }
 
-console.log('\nTotal time:', totalTime, 'ms for', entries.length, 'files - average', averageTime, 'ms per file');
+console.log('\nTotal time:', totalTime, 'ms for', entries.length, 'files -- average', averageTime, 'ms per file');

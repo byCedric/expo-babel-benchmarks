@@ -39,5 +39,5 @@ for (const pluginName of Object.keys(plugins)) {
 
 for (const entry of unsorted.sort((a, b) => a.totalTime - b.totalTime)) {
   const { plugin, averageTime, totalTime, totalVisits } = entry;
-  console.log(plugin, '|| average of', averageTime, 'ms per file || total time', totalTime, 'ms || total visits', totalVisits);
+  console.log(plugin, '-- average of', averageTime, 'ms per file -- total time', totalTime, 'ms -- total visits', totalVisits);
 }
