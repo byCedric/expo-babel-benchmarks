@@ -1,0 +1,12 @@
+diff --git a/build/minify-platform-select-plugin.js b/build/minify-platform-select-plugin.js
+index 32a5bdacf7a207d072b8c08643afb2158594a0aa..f76760857472d48a233a664d0cd7aa2260612e78 100644
+--- a/build/minify-platform-select-plugin.js
++++ b/build/minify-platform-select-plugin.js
+@@ -10,6 +10,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
+ const core_1 = require("@babel/core");
+ function minifyPlatformSelectPlugin({ types: t, }) {
+     return {
++        name: 'expo-minify-platform-select-plugin',
+         visitor: {
+             CallExpression(path, state) {
+                 const node = path.node;

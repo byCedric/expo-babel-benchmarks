@@ -1,0 +1,12 @@
+diff --git a/src/generateFunctionMap.js b/src/generateFunctionMap.js
+index 4e39ed4162254ebce12b4c012e08c8c90dddf1e2..5d08e49eca21834c7f95962d6376b6adec2c0b2a 100644
+--- a/src/generateFunctionMap.js
++++ b/src/generateFunctionMap.js
+@@ -26,6 +26,7 @@ function generateFunctionMappingsArray(ast, context) {
+ }
+ function functionMapBabelPlugin() {
+   return {
++    name: 'metro-source-map',
+     visitor: {},
+     pre: ({ path, metadata, opts }) => {
+       const { filename } = nullthrows(opts);

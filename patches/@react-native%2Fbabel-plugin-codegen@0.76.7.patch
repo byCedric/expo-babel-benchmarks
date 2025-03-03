@@ -1,0 +1,12 @@
+diff --git a/index.js b/index.js
+index 77de6b77b33ad72db13f4cca189ef7cdb627fb8c..28e9af67ef1a79844a29f58b200e38d5e50c126b 100644
+--- a/index.js
++++ b/index.js
+@@ -99,6 +99,7 @@ function isCodegenDeclaration(declaration) {
+ 
+ module.exports = function ({parse, types: t}) {
+   return {
++    name: '@react-native/babel-plugin-codegen',
+     pre(state) {
+       this.code = state.code;
+       this.filename = state.opts.filename;
